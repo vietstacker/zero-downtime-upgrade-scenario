@@ -1,0 +1,12 @@
+#ubuntu  ansible_user=stack
+#ubuntu1 ansible_user=stack
+#haproxy ansible_user=stack
+[member]
+node1
+node2
+node3
+
+[docker:children]
+member
+#[docker]
+#ubuntu2 ansible_user=stack

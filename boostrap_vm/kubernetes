@@ -1,0 +1,5 @@
+[kubernetes]
+master ansible_user=kolla ansible_host=192.168.122.248
+minion1 ansible_user=kolla ansible_host=192.168.122.106
+minion2 ansible_user=kolla ansible_host=192.168.122.14
+

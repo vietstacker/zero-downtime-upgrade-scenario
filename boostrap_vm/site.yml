@@ -1,0 +1,14 @@
+---
+- hosts: all
+  roles:
+    - common
+  gather_facts: no
+
+- hosts: kubernetes
+  roles:
+    - docker
+    - kubernetes
+
+- hosts: docker
+  roles:
+    - docker
