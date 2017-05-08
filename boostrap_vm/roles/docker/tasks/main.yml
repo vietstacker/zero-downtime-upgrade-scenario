@@ -1,0 +1,53 @@
+---
+#- name: Deploy docker apt source
+#  copy: src="docker.list" dest="/etc/apt/sources.list.d/"
+#  become: yes
+#
+#- name: Install docker
+#  apt: update_cache="yes" name="docker-engine" state="present"
+#  become: yes
+- name: Gather facts
+  setup:
+
+- name: Ensuring certs dir exist
+  file: path="/etc/docker/certs.d/{{ item }}:40000/" state="directory"
+  become: yes
+  with_items:
+    - duonghq
+    - stack-team3-pc1
+
+- name: Install certs to Docker
+  copy: src="{{ item }}.crt" dest="/etc/docker/certs.d/{{ item }}:40000/ca.crt"
+  become: yes
+  with_items:
+    - duonghq
+    - stack-team3-pc1
+
+- name: Install certs to system
+  copy: src="{{ item }}.crt" dest="/usr/local/share/ca-certificates/{{ item }}.crt"
+  become: yes
+  with_items:
+    - duonghq
+    - stack-team3-pc1
+
+- debug:
+    var: "hostvars['{{inventory_hostname}}']['ansible_default_ipv4']"
+
+- name: Configure proxy
+  template: src="http-proxy.conf.j2" dest="/etc/systemd/system/docker.service.d/http-proxy.conf"
+  become: yes
+  register: config_proxy
+
+- name: update-ca-certificates
+  shell: update-ca-certificates
+  become: yes
+
+- name: Reload systemd daemon
+  shell: systemctl daemon-reload
+  become: yes
+  when: config_proxy.changed
+
+- name: Restart Docker daemon
+  service: name="docker" state="restarted"
+  become: yes
+

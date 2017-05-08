@@ -1,0 +1,4 @@
+[Service]
+Environment="http_proxy=http://10.164.177.170:8080" "socks_proxy=socks://rep.proxy.nic.fujitsu.com:1080" "https_proxy=http://10.164.177.170:8080"  "HTTP_PROXY=http://9.164.177.170:8080" "HTTPS_PROXY=http://10.164.177.170:8080" "no_proxy=127.0.0.1,duonghq,localhost,10.164.178.166,stack-team3-pc1,192.168.122.250,10.164.180.83,{%- for host in groups['member'] %}
+{{- host -}},{{- hostvars[host]['ansible_default_ipv4']['address'] -}},
+{%- endfor -%}"

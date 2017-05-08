@@ -1,0 +1,18 @@
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+HTTP_PROXY="http://10.164.177.170:8080"
+HTTPS_PROXY="http://10.164.177.170:8080"
+http_proxy="http://10.164.177.170:8080"
+https_proxy="http://10.164.177.170:8080"
+
+socks_proxy="socks://rep.proxy.nic.fujitsu.com:1080"
+SOCKS_PROXY="socks://rep.proxy.nic.fujitsu.com:1080"
+socks_user=Tanaka.kenichi@jp.fujitsu.com
+SOCKS_USER=Tanaka.kenichi@jp.fujitsu.com
+socks5_passwd=1111111111
+socks5_password=1111111111
+SOCKS5_PASSWD=1111111111
+SOCKS5_PASSWORD=1111111111
+
+no_proxy="127.0.0.1,duonghq,localhost,10.164.178.166,192.168.122.250,{%- for host in groups['all'] %}
+{{- host -}},{{- hostvars[host]['ansible_default_ipv4']['address'] -}},
+{%- endfor -%}"

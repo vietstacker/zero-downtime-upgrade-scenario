@@ -1,0 +1,1 @@
+deb [trusted=yes] https://apt.dockerproject.org/repo ubuntu-xenial main

@@ -1,0 +1,33 @@
+---
+- name: install pre-require package
+  apt:
+    name: "apt-transport-https"
+    update_cache: yes
+  become: True
+  tags:
+    - kubernetes
+
+- name: "add apt key"
+  apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    state: present
+  become: True
+  tags:
+    - kubernetes
+
+- name: add kubernetes repo
+  copy: src="kubernetes.list" dest="/etc/apt/sources.list.d/kubernetes.list"
+  become: yes
+  tags:
+    - kubernetes
+
+- name: Install kubenetes components
+  apt: name="{{ item }}" update_cache=yes
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl
+    - kubernetes-cni
+  become: True
+  tags:
+    - kubernetes
