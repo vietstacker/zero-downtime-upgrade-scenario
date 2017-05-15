@@ -1,2 +1,4 @@
 # zero-downtime-upgrade-scenario
-zero-downtime-upgrade
+
+- boostrap_vm: for preparing and launching testbed VM.
+- script: for continuously send requests to testbed environment, doing upgrade and validating results.
